@@ -1,7 +1,7 @@
 import React from 'react'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 // import * as BooksAPI from './BooksAPI'
-import SearchPage from './containers/SearchPage.js'
-import MainPage from './containers/MainPage.js'
+import { MainPage, SearchPage } from './pages'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -69,13 +69,14 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchPage />
-        ) : (
-          <MainPage bookshelfs={this.state.bookshelfs} />
-        )}
-      </div>
+      <Router>
+        <div className="app">
+          <Route exact path='/' render={() => (
+            <MainPage bookshelfs={this.state.bookshelfs} />
+          )} />
+          <Route path='/search' component={SearchPage} />
+        </div>
+      </Router>
     )
   }
 }

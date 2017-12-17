@@ -8,7 +8,7 @@ const MainPage = props => {
     <div className="list-books">
       <PageHeading title={'MyReads'} />
       <BookshelfsContainer bookshelfs={props.bookshelfs} />
-      <SearchButton onClick={() => this.setState({ showSearchPage: true })} />
+      <SearchButton />
     </div>
   )
 }

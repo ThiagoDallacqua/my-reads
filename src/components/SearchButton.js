@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const SearchButton = props => {
   return (
     <div className="open-search">
-      <a onClick={props.onClick}>Add a book</a>
+      <Link to="/search">Add a book</Link>
     </div>
   )
 }
