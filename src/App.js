@@ -60,12 +60,32 @@ class BooksApp extends React.Component {
      ]
   }
 
+  changeBookshelf = ({bookshelfFrom = {}, book = {}, bookshelfTo = {}} = {}) => {
+    let newFrom = bookshelfFrom.books.filter(b => b.bookTitle !== book.bookTitle)
+    let newTo = [].concat(...bookshelfTo.books, book)
+    let newState = this.state.bookshelfs.map(bookshelf => {
+      if (bookshelf.shelfTitle === newFrom.shelfTitle) bookshelf = newFrom
+      if (bookshelf.shelfTitle === newTo.shelfTitle) bookshelf = newTo
+    })
+
+    this.setState({ bookshelfs: newState })
+  }
+
+  removeBook = ({bookshelf = {}, book = {}} = {}) => {
+    let newBookshelf = bookshelf.books.filter(b => b.bookTitle !== book.bookTitle)
+    let newState = this.state.bookshelfs.map(bookshelf => {
+      if (bookshelf.shelfTitle === newBookshelf.shelfTitle) bookshelf = newBookshelf
+    })
+
+    this.setState({ bookshelfs: newState })
+  }
+
   render() {
     return (
       <Router>
         <div className="app">
           <Route exact path='/' render={() => (
-            <MainPage bookshelfs={this.state.bookshelfs} />
+            <MainPage bookshelfs={this.state.bookshelfs} changeBookshelf={this.changeBookshelf} removeBook={this.removeBook} />
           )} />
           <Route path='/search' component={SearchPage} />
         </div>

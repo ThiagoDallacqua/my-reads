@@ -7,7 +7,7 @@ const MainPage = props => {
   return (
     <div className="list-books">
       <PageHeading title={'MyReads'} />
-      <BookshelfsContainer bookshelfs={props.bookshelfs} />
+      <BookshelfsContainer bookshelfs={props.bookshelfs} changeBookshelf={props.changeBookshelf} removeBook={props.removeBook} />
       <SearchButton />
     </div>
   )
