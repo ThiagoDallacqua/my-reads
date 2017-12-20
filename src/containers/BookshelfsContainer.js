@@ -18,6 +18,9 @@ const BookshelfsContainer = props => {
                                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.bookCover}")` }}></div>
                                         <div className="book-shelf-changer">
                                           <select value='initial' onChange={(e) => {
+                                            //I've settled the initial value for the select as the first, disabled, option to hadle the change for every possible option
+
+                                            //Here I check for evey possible change, to filter the arguments to be passed down to the ".changeBookshelf()"
                                             if (e.target.value === 'currentlyReading' && bookshelf.shelfTitle !== 'Currently Reading') {
                                               props.changeBookshelf(bookshelf, book, 'Currently Reading')
                                             }

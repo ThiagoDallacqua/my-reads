@@ -61,31 +61,49 @@ class BooksApp extends React.Component {
   }
 
   changeBookshelf = (bookshelfFrom, book, bookshelfTo) => {
+    /*
+    in this function I receive three arguments:
+    - a bookshelf that the book is from
+    - the book itself
+    - a bookshelf to send the book to
+    */
     let newFrom = bookshelfFrom
     newFrom.books = newFrom.books.filter(b => b.bookTitle !== book.bookTitle)
+    // here, after passing the origin bookshelf I passed a new array of books without the selected book.
 
     let [ newTo ] = this.state.bookshelfs.filter(bookshelf => bookshelf.shelfTitle === bookshelfTo)
     newTo.books = [].concat(...newTo.books, book)
-
+    //here I've passed the bookshelf to send the book, based on the option selected, and concatenated the book into a new array, containing the old one too
 
     let newState = this.state.bookshelfs.map(bookshelf => {
       if (bookshelf.shelfTitle === newFrom.shelfTitle) return bookshelf = newFrom
       if (bookshelf.shelfTitle === newTo.shelfTitle) return bookshelf = newTo
       return bookshelf
     })
+    //here I've passed a new array of bookshelfs, based on the actual state, replacing the bookshelf origin and destination containing the new values
 
     this.setState({ bookshelfs: newState })
+    //finaly, I update the state
   }
 
   removeBook = (bookshelf, book) => {
+    /*
+    in this function I receive two arguments:
+    - a bookshelf that the book is from
+    - the book itself
+    */
     let newBookshelf = bookshelf
     newBookshelf.books = bookshelf.books.filter(b => b.bookTitle !== book.bookTitle)
+    // here, after passing the origin bookshelf I passed a new array of books without the selected book.
+
     let newState = this.state.bookshelfs.map(bookshelf => {
       if (bookshelf.shelfTitle === newBookshelf.shelfTitle) return bookshelf = newBookshelf
       return bookshelf
     })
+    //here I've passed a new array of bookshelfs, based on the actual state, replacing the bookshelf origin without the selected book
 
     this.setState({ bookshelfs: newState })
+    //finaly, I update the state
   }
 
   render() {
