@@ -17,10 +17,26 @@ const BookshelfsContainer = props => {
                                       <div className="book-top">
                                         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.bookCover}")` }}></div>
                                         <div className="book-shelf-changer">
-                                          <select>
-                                            <option value="none" disabled>Move to...</option>
+                                          <select value='initial' onChange={(e) => {
+                                            if (e.target.value === 'currentlyReading' && bookshelf.shelfTitle !== 'Currently Reading') {
+                                              props.changeBookshelf(bookshelf, book, 'Currently Reading')
+                                            }
+
+                                            if (e.target.value === 'wantToRead' && bookshelf.shelfTitle !== 'Want to Read') {
+                                              props.changeBookshelf(bookshelf, book, 'Want to Read')
+                                            }
+
+                                            if (e.target.value === 'read' && bookshelf.shelfTitle !== 'Read') {
+                                              props.changeBookshelf(bookshelf, book, 'Read')
+                                            }
+
+                                            if (e.target.value === 'none') {
+                                              props.removeBook(bookshelf, book)
+                                            }
+                                          }}>
+                                            <option value="initial" disabled>Move to...</option>
                                             <option value="currentlyReading">Currently Reading</option>
-                                            <option value="wantToRead">Want to Read</option>
+                                            <option defaultValue value="wantToRead">Want to Read</option>
                                             <option value="read">Read</option>
                                             <option value="none">None</option>
                                           </select>

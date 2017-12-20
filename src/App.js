@@ -60,21 +60,29 @@ class BooksApp extends React.Component {
      ]
   }
 
-  changeBookshelf = ({bookshelfFrom = {}, book = {}, bookshelfTo = {}} = {}) => {
-    let newFrom = bookshelfFrom.books.filter(b => b.bookTitle !== book.bookTitle)
-    let newTo = [].concat(...bookshelfTo.books, book)
+  changeBookshelf = (bookshelfFrom, book, bookshelfTo) => {
+    let newFrom = bookshelfFrom
+    newFrom.books = newFrom.books.filter(b => b.bookTitle !== book.bookTitle)
+
+    let [ newTo ] = this.state.bookshelfs.filter(bookshelf => bookshelf.shelfTitle === bookshelfTo)
+    newTo.books = [].concat(...newTo.books, book)
+
+
     let newState = this.state.bookshelfs.map(bookshelf => {
-      if (bookshelf.shelfTitle === newFrom.shelfTitle) bookshelf = newFrom
-      if (bookshelf.shelfTitle === newTo.shelfTitle) bookshelf = newTo
+      if (bookshelf.shelfTitle === newFrom.shelfTitle) return bookshelf = newFrom
+      if (bookshelf.shelfTitle === newTo.shelfTitle) return bookshelf = newTo
+      return bookshelf
     })
 
     this.setState({ bookshelfs: newState })
   }
 
-  removeBook = ({bookshelf = {}, book = {}} = {}) => {
-    let newBookshelf = bookshelf.books.filter(b => b.bookTitle !== book.bookTitle)
+  removeBook = (bookshelf, book) => {
+    let newBookshelf = bookshelf
+    newBookshelf.books = bookshelf.books.filter(b => b.bookTitle !== book.bookTitle)
     let newState = this.state.bookshelfs.map(bookshelf => {
-      if (bookshelf.shelfTitle === newBookshelf.shelfTitle) bookshelf = newBookshelf
+      if (bookshelf.shelfTitle === newBookshelf.shelfTitle) return bookshelf = newBookshelf
+      return bookshelf
     })
 
     this.setState({ bookshelfs: newState })
