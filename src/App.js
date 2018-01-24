@@ -10,9 +10,9 @@ class BooksApp extends React.Component {
   }
 
   setBookshelfs = () => {
-    BooksAPI.getAll()
+    BooksAPI.getAll() //In order to bootstrap the application, and to get the latest status of the shelfs in the backend, I'm using this API call
     .then(res => {
-      let currReadingBooks = res.filter((book) => {
+      let currReadingBooks = res.filter((book) => { // Here I'm checking which shelf the book belongs to, in order filter an array of books to each shelf variable
         return book.shelf === 'currentlyReading'
       })
       let wtToReadBooks = res.filter((book) => {
@@ -26,7 +26,7 @@ class BooksApp extends React.Component {
         bookshelfs: [
           {
             shelfTitle: 'Currently Reading',
-            books: [...currReadingBooks]
+            books: [...currReadingBooks]  // Then here I set those variables into the state, on each array
           },
           {
             shelfTitle: 'Want to Read',
@@ -44,7 +44,7 @@ class BooksApp extends React.Component {
   }
 
   changeBookshelf = (book, bookshelfTo) => {
-    BooksAPI.update(book, bookshelfTo)
+    BooksAPI.update(book, bookshelfTo) // This function I use to change a book from bookshelfs and to set a new book into a shelf
     .then(() => {
       return this.setBookshelfs()
     })
