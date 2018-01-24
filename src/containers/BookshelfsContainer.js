@@ -26,7 +26,7 @@ const BookshelfsContainer = props => {
                                               if (e.target.value !== 'None') {
                                                 let bookshelf = ''
 
-                                                e.target.value === 'Currently Reading'
+                                                e.target.value === 'Currently Reading' // I'm checking which is the value of the selected option and parsing to an usable value
                                                 ? bookshelf = 'currentlyReading'
                                                 : e.target.value === 'Want to Read'
                                                   ? bookshelf = 'wantToRead'
@@ -34,7 +34,7 @@ const BookshelfsContainer = props => {
 
                                                 props.changeBookshelf(book, bookshelf)
                                               } else {
-                                                props.changeBookshelf(book, 'none')
+                                                props.changeBookshelf(book, 'none') // If the selected option is 'none' then it will be 'deleted'
                                               }
                                             }
                                           }}>
