@@ -12,41 +12,46 @@ const BookshelfsContainer = props => {
                       <ol className="books-grid">
                         {
                           bookshelf.books.map(book => {
-                            return <li key={book.bookTitle}>
+                            return <li key={book.title}>
                                     <div className="book">
                                       <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.bookCover}")` }}></div>
+                                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
                                         <div className="book-shelf-changer">
-                                          <select value='initial' onChange={(e) => {
+                                          <select value={bookshelf.shelfTitle} onChange={(e) => {
                                             //I've settled the initial value for the select as the first, disabled, option to hadle the change for every possible option
 
                                             //Here I check for evey possible change, to filter the arguments to be passed down to the ".changeBookshelf()"
-                                            if (e.target.value === 'currentlyReading' && bookshelf.shelfTitle !== 'Currently Reading') {
-                                              props.changeBookshelf(bookshelf, book, 'Currently Reading')
-                                            }
 
-                                            if (e.target.value === 'wantToRead' && bookshelf.shelfTitle !== 'Want to Read') {
-                                              props.changeBookshelf(bookshelf, book, 'Want to Read')
-                                            }
+                                            if (e.target.value !== bookshelf.shelfTitle) {
+                                              if (e.target.value !== 'None') {
+                                                let bookshelf = ''
 
-                                            if (e.target.value === 'read' && bookshelf.shelfTitle !== 'Read') {
-                                              props.changeBookshelf(bookshelf, book, 'Read')
-                                            }
+                                                e.target.value === 'Currently Reading'
+                                                ? bookshelf = 'currentlyReading'
+                                                : e.target.value === 'Want to Read'
+                                                  ? bookshelf = 'wantToRead'
+                                                  : bookshelf = 'read'
 
-                                            if (e.target.value === 'none') {
-                                              props.removeBook(bookshelf, book)
+                                                props.changeBookshelf(book, bookshelf)
+                                              } else {
+                                                props.changeBookshelf(book, 'none')
+                                              }
                                             }
                                           }}>
                                             <option value="initial" disabled>Move to...</option>
-                                            <option value="currentlyReading">Currently Reading</option>
-                                            <option defaultValue value="wantToRead">Want to Read</option>
-                                            <option value="read">Read</option>
-                                            <option value="none">None</option>
+                                            <option>Currently Reading</option>
+                                            <option>Want to Read</option>
+                                            <option>Read</option>
+                                            <option>None</option>
                                           </select>
                                         </div>
                                       </div>
-                                      <div className="book-title">{book.bookTitle}</div>
-                                      <div className="book-authors">{book.bookAuthor}</div>
+                                      <div className="book-title">{book.title}</div>
+                                      {
+                                        book.authors
+                                        ? book.authors.map(author => <div key={Math.random().toString(36).substr(-8)} className="book-authors">{author}</div>)
+                                        : null
+                                      }
                                     </div>
                                   </li>
                           })
